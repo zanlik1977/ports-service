@@ -1,0 +1,16 @@
+# Use the official Golang image
+FROM golang:1.23
+
+WORKDIR /app
+
+# Copy the go.mod and go.sum files
+COPY go.mod go.sum ./
+
+# Install dependencies
+RUN go mod download
+
+# Copy the entire project
+COPY . .
+
+# Run tests
+CMD ["go", "test", "./...", "-v"]

@@ -18,4 +18,3 @@ WORKDIR /
 COPY --from=builder /ports-service .
 
 ENTRYPOINT ["/ports-service"]
-
