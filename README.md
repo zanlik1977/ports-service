@@ -48,7 +48,7 @@ ports.json
 ## How to run
 
 Create a Docker network
-$ docker network create my-network
+- $ docker network create my-network
 
 Run the Redis container on this network
 - $ docker run -d --name redis --network my-network redis
