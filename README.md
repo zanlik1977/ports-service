@@ -17,26 +17,33 @@ New record is created in the database, or old one replaced.
 structure:
 
 /cmd - main.go 
-    - create redis client
-    - start port service
-    - launch http server
-    - preload database with ports.json records
+- create redis client
+- start port service
+- launch http server
+- preload database with ports.json records
 
 /pkg/redis - redis.go
-    - redis client
+- redis client
 
 /pkg/service - port_service.go
-    - handle ports
-    - validate request
-    - populate database
+- handle ports
+- validate request
+- populate database
 
 /tests - port_service_test.go
-    - tests simulate clients sending requests
-    - test happy path
-    - test invalid requests
+- tests simulate clients sending requests
+- test happy path
+- test invalid requests
 
 Dockerfile      - for running application
+
 Dockerfile.test - for running tests
+
+go.mod
+
+go.sum
+
+ports.json
 
 ## How to run
 
@@ -44,32 +51,32 @@ Create a Docker network
 $ docker network create my-network
 
 Run the Redis container on this network
-$ docker run -d --name redis --network my-network redis
+- $ docker run -d --name redis --network my-network redis
 
 Build the application image
-$ docker build -t ports-service .
+- $ docker build -t ports-service .
 
 Run your application container on the same network
-$ docker run --rm --name ports-service --network my-network -v $(pwd)/ports.json:/app/ports.json ports-service
+- $ docker run --rm --name ports-service --network my-network -v $(pwd)/ports.json:/app/ports.json ports-service
 
 Build the test image
-$ docker build -t ports-service-test -f Dockerfile.test .
+- $ docker build -t ports-service-test -f Dockerfile.test .
 
 Run tests on the same network
-$ docker run --rm --network my-network -e REDIS_ADDR=redis:6379 ports-service-test
+- $ docker run --rm --network my-network -e REDIS_ADDR=redis:6379 ports-service-test
 
 ## Testing results
 
 miroslavmicic@Miroslavs-MacBook-Air ports-service % docker run --rm --network my-network -e REDIS_ADDR=redis:6379 ports-service-test
-?   	github.com/zanlik1977/ports-service/cmd	[no test files]
-?   	github.com/zanlik1977/ports-service/pkg/redis	[no test files]
-?   	github.com/zanlik1977/ports-service/pkg/service	[no test files]
-=== RUN   TestCreateOrUpdatePort
---- PASS: TestCreateOrUpdatePort (0.00s)
-=== RUN   TestInvalidPortData
---- PASS: TestInvalidPortData (0.00s)
-PASS
-ok  	github.com/zanlik1977/ports-service/tests	0.007s
+-   	github.com/zanlik1977/ports-service/cmd	[no test files]
+-   	github.com/zanlik1977/ports-service/pkg/redis	[no test files]
+-   	github.com/zanlik1977/ports-service/pkg/service	[no test files]
+- === RUN   TestCreateOrUpdatePort
+- --- PASS: TestCreateOrUpdatePort (0.00s)
+- === RUN   TestInvalidPortData
+- --- PASS: TestInvalidPortData (0.00s)
+- PASS
+- ok  	github.com/zanlik1977/ports-service/tests	0.007s
 
 
 # Golang microservices assignment
